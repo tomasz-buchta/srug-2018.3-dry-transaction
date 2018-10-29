@@ -115,6 +115,14 @@
           </section>
         </section>
         <section>
+          <h2>Not only step</h2>
+          <section><b>map</b> – any output is considered successful and returned as Success(output)</section>
+          <section><b>check</b> - the operation returns a boolean. True values return the original input as Success(input). Any other values return the original input as Failure(input).</section>
+          <section><b>try</b> – the operation may raise an exception in an error case. This is caught and returned as Failure(exception). The output is otherwise returned as Success(output).</section>
+          <section><b>tee</b> – the operation interacts with some external system and has no meaningful output. The original input is passed through and returned as Success(input).</section>
+          <section>Custom adapters - build one yourself</section>
+        </section>
+        <section>
           <h2>Examples of business transactions</h2>
           <ul>
             <li> Booking something in external api </li>
@@ -128,6 +136,7 @@
           <h2>Links</h2>
           https://fsharpforfunandprofit.com/rop/
           https://www.morozov.is/2018/05/27/do-notation-ruby.html
+          https://dry-rb.org/gems/dry-transaction/
         </section>
       </div>
 
