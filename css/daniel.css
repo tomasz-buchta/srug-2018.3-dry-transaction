@@ -1,0 +1,59 @@
+.reveal code {
+  padding: 20px;
+  font-size: 28px;
+  text-align: initial;
+  line-height: 1.1;
+}
+
+.reveal ul {
+  text-align: left;
+}
+
+.reveal section {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.6;
+}
+
+.akra-section {
+  color: black;
+  font-size: 40px !important;
+  display: grid;
+  grid-template-rows: 200px 200px;
+  grid-template-areas: "a a b" 
+                       "a a c"
+                       "x d d";
+}
+
+.zdjecie-akra {
+  grid-area: a;
+  width: 800px;
+}
+.fb {
+  grid-area: b;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.strona {
+  grid-area: c;
+  display: flex;
+  justify-content: baseline;
+  align-items: flex-start;
+}
+
+.aplikuj-na {
+  grid-area: d;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.fb img, .strona img, .aplikuj-na img {
+  width: 40px;
+  margin: 0 20px !important;
+  margin-bottom: -5px !important;
+}
