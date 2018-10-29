@@ -124,6 +124,16 @@
           </section>
         </section>
         <section>
+          <h1>But why?</h1>
+          <section>
+            <ul>
+              <li>Steps are independent - makes for easier testing</li>
+              <li>Transaction becomes a series of steps - eases the understanding</li>
+              <li>Return Success or Failure - Makes for easier flow and error handling</li>
+            </ul>
+          </section>
+        </section>
+        <section>
           <h2>Not only step</h2>
           <section><b>map</b> any output is considered successful and returned as Success(output)</section>
           <section><b>check</b> the operation returns a boolean. True values return the original input as Success(input). Any other values return the original input as Failure(input).</section>
