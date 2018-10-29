@@ -70,7 +70,7 @@
           <h2>Small primer about monads</h2>
           <section>
             <p>
-            <h3>Scientific stuff</h3>
+            <h3>Category theory definitions</h3>
               <ul>
                 <li><b>Monad</b> - monoid in category of endofunctors.</li>
                 <li><b>Endofunctor</b> - Functor that maps a category to itself</li>
@@ -79,6 +79,7 @@
             </p>
           </section>
           <section>
+            <h3>
             <ul>
               <li>There is a Result type, which can be either a Success or a Failure</li>
               <li>Success and Failure are practically containers with different data</li>
@@ -119,15 +120,15 @@
         <section>
           <h1> What Railway oriented programming is about? </h1>
           <section>
-            In short: when ever thigs go bad(derail) we go into 'error rail'
+            In short: whenever things go bad(derail) we go into 'error rail'
           </section>
         </section>
         <section>
           <h2>Not only step</h2>
-          <section><b>map</b> – any output is considered successful and returned as Success(output)</section>
-          <section><b>check</b> - the operation returns a boolean. True values return the original input as Success(input). Any other values return the original input as Failure(input).</section>
-          <section><b>try</b> – the operation may raise an exception in an error case. This is caught and returned as Failure(exception). The output is otherwise returned as Success(output).</section>
-          <section><b>tee</b> – the operation interacts with some external system and has no meaningful output. The original input is passed through and returned as Success(input).</section>
+          <section><b>map</b> any output is considered successful and returned as Success(output)</section>
+          <section><b>check</b> the operation returns a boolean. True values return the original input as Success(input). Any other values return the original input as Failure(input).</section>
+          <section><b>try</b> the operation may raise an exception in an error case. This is caught and returned as Failure(exception). The output is otherwise returned as Success(output).</section>
+          <section><b>tee</b> the operation interacts with some external system and has no meaningful output. The original input is passed through and returned as Success(input).</section>
           <section>Custom adapters - build one yourself</section>
         </section>
         <section>
