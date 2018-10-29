@@ -132,21 +132,40 @@
           <section>Custom adapters - build one yourself</section>
         </section>
         <section>
-          <h2>Examples of business transactions</h2>
-          <pre>
+          <section>
+            <h2>Example of business transactions</h2>
+            <pre>
               <code>
 class BuildContext
   include Dry::Transaction(container: ::Container)
 
-  step :validate_max_guests_count, with: 'trip.validate_max_guests_count'
+  check :validate_guest_count, with: 'trip.validate_guest_count'
   map  :calculate_host_pricing, with: 'trip.calculate_host_pricing'
   step :build_booking_intent,   with: 'trip.build_booking_intent'
   map  :build_payment_options,  with: 'trip.build_payment_options'
   map  :build_nationality_meta, with: 'trip.build_nationality_meta'
 end
               </code>
-          </pre>
+            </pre>
 
+          </section>
+          <section>
+          <pre>
+          <code>
+  check :validate_guest_count, with: 'trip.validate_guest_count'
+          </code>
+          </pre>
+          <!-- TODO: Format this nicely -->
+          The step will pass if it returns true. So the operation will continue if the guest count is valid
+          </section>
+          <section>
+            <pre>
+            <code>
+  step :build_booking_intent,   with: 'trip.build_booking_intent'
+            </code>
+            </pre>
+            Will apply the transaction specified and return it outputs
+          </section>
         </section>
         <section>
           <h1>Questions?</h1>
