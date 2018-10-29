@@ -77,7 +77,14 @@
             <ul>
               <li>There is a Result type, which can be either a Success or a Failure</li>
               <li>Success and Failure are practically containers with different data</li>
-              TODO: Code example here
+              <pre>
+              <code>
+              def step_implementation(input)
+                return Failure(:error) if input.valid?
+                Success(input)
+              end
+              </code>
+              </pre>
             </ul>
           </section>
         </section>
@@ -140,7 +147,8 @@
           { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
           { src: 'plugin/search/search.js', async: true },
           { src: 'plugin/zoom-js/zoom.js', async: true },
-          { src: 'plugin/notes/notes.js', async: true }
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
         ]
       });
 
