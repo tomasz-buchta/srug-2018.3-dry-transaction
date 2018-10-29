@@ -124,9 +124,20 @@
         </section>
         <section>
           <h2>Examples of business transactions</h2>
-          <ul>
-            <li> Booking something in external api </li>
-          </ul>
+          <pre id="code-sample__context">
+              <code>
+class BuildContext
+  include Dry::Transaction(container: ::Container)
+
+  step :validate_max_guests_count, with: 'trip.validate_max_guests_count'
+  map  :calculate_host_pricing, with: 'trip.calculate_host_pricing'
+  step :build_booking_intent,   with: 'trip.build_booking_intent'
+  map  :build_payment_options,  with: 'trip.build_payment_options'
+  map  :build_nationality_meta, with: 'trip.build_nationality_meta'
+end
+              </code>
+          </pre>
+
         </section>
         <section>
           <h1>Questions?</h1>
