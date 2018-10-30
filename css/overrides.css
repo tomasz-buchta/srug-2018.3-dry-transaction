@@ -21,6 +21,9 @@
   flex-flow: row;
   align-items: center;
 }
+.long-snippet {
+  font-size: 22px;
+}
 
 .akra-section {
   color: black;
