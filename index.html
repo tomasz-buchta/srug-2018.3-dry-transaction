@@ -222,11 +222,12 @@
           <code style="font-size: 20px" class="ruby">
 require "dry/transaction"
 
-class CreateUser
+class UpdateUser
   include Dry::Transaction
 
   step :validate
   step :save
+  step :send_user_update_email
 
   private
 
@@ -237,6 +238,7 @@ class CreateUser
   def save(input)
     # returns Success(user)
   end
+  #...
 end
 
           </code>
