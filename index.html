@@ -82,7 +82,7 @@
           <section>
             <h2>The code</h2>
             <pre>
-            <code>
+            <code class="ruby">
   def update_user_email(params)
     user.find(params[:user_id])
     user.update_attributes(email: params[:user_email])
@@ -167,7 +167,7 @@
                 <li>There is a Result type, which can be either a Success or a Failure</li>
                 <li>Success and Failure are practically containers with different data</li>
                 <pre>
-              <code>
+              <code class="ruby">
               def step_implementation(input)
                 return Failure(:error) if input.valid?
                 Success(input)
@@ -228,7 +228,7 @@
           <section>
             <h2>Example of business transactions</h2>
             <pre>
-              <code>
+              <code class="ruby">
 class BuildContext
   include Dry::Transaction(container: ::Container)
 
@@ -244,7 +244,7 @@ end
           </section>
           <section>
             <pre>
-          <code>
+          <code class="ruby">
   check :validate_guest_count, with: 'trip.validate_guest_count'
           </code>
             </pre>
@@ -253,7 +253,7 @@ end
           </section>
           <section>
             <pre>
-            <code>
+            <code class="ruby">
   step :build_booking_intent,   with: 'trip.build_booking_intent'
             </code>
             </pre>
