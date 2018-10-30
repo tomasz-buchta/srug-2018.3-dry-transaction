@@ -289,6 +289,21 @@ end
           </section>
         </section>
         <section>
+          <h1>More sophisticated example</h1>
+          <section>
+            Let's say we want to transfer ownership of some project
+            <ul class="fragment">
+              <li class="fragment">We need to check if the receiver is eligible to own it</li>
+              <li class="fragment">We need to check if it can be transfered</li>
+              <li class="fragment">We want to wrap the operation itself in db transaction - project not owned by anyone is no good</li>
+            </ul>
+          </section>
+          <section>
+            You can wrap the dry-transaction in db transaction using around step
+          </section>
+
+        </section>
+        <section>
           <h1>Questions?</h1>
           <p>You get a cookie for each question</p>
         </section>
