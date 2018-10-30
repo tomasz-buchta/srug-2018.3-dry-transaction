@@ -16,6 +16,11 @@
   align-items: center;
   line-height: 1.6;
 }
+.column-container {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+}
 
 .akra-section {
   color: black;

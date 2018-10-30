@@ -16,7 +16,7 @@
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/akra.css" id="theme">
-    <link rel="stylesheet" href="css/daniel.css">
+    <link rel="stylesheet" href="css/overrides.css">
 
 
 		<!-- Theme used for syntax highlighting of code -->
@@ -67,31 +67,114 @@
           </ul>
         </section>
         <section>
-          <h2>Small primer about monads</h2>
+          <h1>Use case</h1>
           <section>
-            <p>
-            <h3>Category theory definitions</h3>
-              <ul>
-                <li><b>Monad</b> - monoid in category of endofunctors.</li>
-                <li><b>Endofunctor</b> - Functor that maps a category to itself</li>
-                <li><b>Functor</b> - homomorphism between categories</li>
-              </ul>
-            </p>
+            <h2>"As a user I want to update my name and email address"</h2>
           </section>
           <section>
-            <h3>
+            <ol>
+              <li><p class="fragment">Validate params</p></li>
+              <li><p class="fragment">Update existing user record</p></li>
+              <li><p class="fragment">Send verification email</p></li>
+              <li><p class="fragment">Return result to user</p></li>
+            </ol>
+          </section>
+          <section>
+            <h2>The code</h2>
+            <pre>
+            <code>
+  def update_user_email(params)
+    user.find(params[:user_id])
+    user.update_attributes(email: params[:user_email])
+    UserMailer.send_email_changed_email(user)
+  end
+            </code>
+            </pre>
+          </section>
+          <section>
+            <pre>
+            <code>
+  def update_user_email(params)
+    user.find_by_id(params[:user_id])
+    if user
+      user.update_attributes(email: params[:user_email])
+      UserMailer.send_email_changed_email(user)
+    else
+      :user_not_found
+    end
+  end
+            </code>
+            </pre>
+          </section>
+          <section>
+            <pre>
+            <code>
+  def update_user_email(params)
+    user.find_by_id(params[:user_id])
+    if user
+      if user.update_attributes(email: params[:user_email])
+        UserMailer.send_email_changed_email(user)
+      else
+        user.errors.message
+      end
+    else
+      :user_not_found
+    end
+  end
+            </code>
+            </pre>
+          </section>
+          <section>
+            <div class="column-container">
+              <div class="column-left">
+                <pre>
+            <code>
+  def update_user_id(params)
+    user.find_by_email(params[:user_id])
+    if user
+      if user.update_attributes(email: params[:user_email])
+        UserMailer.send_email_changed_email(user)
+        catch ResqueFailed
+          :resque_failed
+      else
+        user.errors.message
+      end
+    else
+      :user_not_found
+    end
+  end
+            </code>
+                </pre>
+              </div>
+              <div class="column-right">
+                <span class="side-note">Duh, error handling covers the purpose</span>
+              </div>
+            </div>
+          </section>
+        </section>
+        <section>
+          <h2>Small primer about monads</h2>
+          <section>
+            <h3>Category theory definitions</h3>
             <ul>
-              <li>There is a Result type, which can be either a Success or a Failure</li>
-              <li>Success and Failure are practically containers with different data</li>
-              <pre>
+              <li><b>Monad</b> - monoid in category of endofunctors.</li>
+              <li><b>Endofunctor</b> - Functor that maps a category to itself</li>
+              <li><b>Functor</b> - homomorphism between categories</li>
+            </ul>
+          </section>
+          <section>
+              <ul>
+                <li>There is a Result type, which can be either a Success or a Failure</li>
+                <li>Success and Failure are practically containers with different data</li>
+                <pre>
               <code>
               def step_implementation(input)
                 return Failure(:error) if input.valid?
                 Success(input)
               end
               </code>
-              </pre>
-            </ul>
+                </pre>
+              </ul>
           </section>
         </section>
         <section>
@@ -160,13 +243,13 @@ end
 
           </section>
           <section>
-          <pre>
+            <pre>
           <code>
   check :validate_guest_count, with: 'trip.validate_guest_count'
           </code>
-          </pre>
-          <!-- TODO: Format this nicely -->
-          The step will pass if it returns true. So the operation will continue if the guest count is valid
+            </pre>
+            <!-- TODO: Format this nicely -->
+            The step will pass if it returns true. So the operation will continue if the guest count is valid
           </section>
           <section>
             <pre>
