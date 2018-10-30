@@ -26,12 +26,10 @@
   color: black;
   font-size: 40px !important;
   display: grid;
-  row-gap: 0.3em;
   grid-template-rows: 200px 200px;
-  grid-template-areas: "a a"
-                       "a a"
-                       "b c"
-                       "d d";
+  grid-template-areas: "a a b" 
+                       "a a c"
+                       "d d x";
 }
 
 .zdjecie-akra {
@@ -41,15 +39,15 @@
 .fb {
   grid-area: b;
   display: flex;
-  align-items: center;
   justify-content: flex-start;
+  align-items: center;
 }
 
 .strona {
   grid-area: c;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  justify-content: baseline;
+  align-items: flex-start;
 }
 
 .aplikuj-na {
