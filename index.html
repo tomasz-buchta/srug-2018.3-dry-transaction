@@ -217,6 +217,32 @@
           </section>
         </section>
         <section>
+          <h1>Our use case using dry-transaction</h1>
+          <pre>
+          <code class="long-snippet">
+require "dry/transaction"
+
+class CreateUser
+  include Dry::Transaction
+
+  step :validate
+  step :save
+
+  private
+
+  def validate(input)
+    # returns Success(valid_data) or Failure(validation)
+  end
+
+  def save(input)
+    # returns Success(user)
+  end
+end
+
+          </code>
+          </pre>
+        </section>
+        <section>
           <h1>Not only step</h1>
           <section><h2>map</h2> any output is considered successful and returned as Success(output)</section>
           <section><h2>check</h2> the operation returns a boolean. True values return the original input as Success(input). Any other values return the original input as Failure(input).</section>
