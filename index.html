@@ -315,6 +315,20 @@ end
             </ul>
           </section>
           <section>
+            <pre>
+            <code>
+class TransferProject
+  include Dry::Transaction
+
+  check :check_project_owner
+  check :check_project_receiver
+  step :transfer_project_ownership
+  step :notify
+end
+            </code>
+            </pre>
+          </section>
+          <section>
             You can wrap the dry-transaction in db transaction using around step
           </section>
 
