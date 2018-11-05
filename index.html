@@ -271,7 +271,7 @@ end
         </section>
         <section>
           <section>
-            <h2>Example of business transactions</h2>
+            <h2>Real world example</h2>
             <pre>
               <code class="ruby">
 class BuildContext
@@ -310,6 +310,8 @@ end
           <section>
             Let's say we want to transfer ownership of some project
             <ul class="fragment">
+              <li class="fragment">We need to fetch the project entity</li>
+              <li class="fragment">We need to fetch the user we want to transfer project to</li>
               <li class="fragment">We need to check if the receiver is eligible to own it</li>
               <li class="fragment">We need to check if it can be transfered</li>
               <li class="fragment">We want to wrap the operation itself in db transaction - project not owned by anyone is no good</li>
@@ -317,14 +319,16 @@ end
           </section>
           <section>
             <pre>
-            <code>
+            <code class="ruby">
 class TransferProject
   include Dry::Transaction
 
-  check :check_project_owner
-  check :check_project_receiver
-  step :transfer_project_ownership
-  step :notify
+  step  :fetch_project # Returns Success(output) or Failure(:project_not_found)
+  step  :fetch_user
+  check :owner_can_release_ownership? # Returns true/false
+  check :user_can_own_project? # Returns true/false
+  step :transfer_project_ownership # Returns Success(input) or Failure(:project_transfer_error)
+  step :notify_user # Returns Success(input) or Failure(:cannot_notify_user)
 end
             </code>
             </pre>
