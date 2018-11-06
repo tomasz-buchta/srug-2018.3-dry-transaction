@@ -1,6 +1,17 @@
 #!ruby
+require 'bundler/inline'
+
+gemfile do
+  source 'https://rubygems.org'
+  gem 'dry-transaction'
+  gem 'dry-validation'
+  gem 'pry'
+end
+
 require 'dry/transaction'
-require 'pry'
+require 'dry-validation'
+
+Dry::Validation.load_extensions(:monads)
 
 class UpdateUser
   include Dry::Transaction
@@ -12,8 +23,10 @@ class UpdateUser
   private
 
   def validate(input)
-    return Failure(:params_invalid) unless input[:email]
-    Success(input)
+    schema = Dry::Validation.Schema do
+      required(:email).filled(:str?)
+    end
+    schema.call(input).to_monad
   end
 
   def save(input)
@@ -28,13 +41,13 @@ class UpdateUser
 end
 
 create_user = UpdateUser.new
-create_user.call(email: 'john@doe.com') do |m|
+create_user.call(email: 'test@email.com') do |m|
   m.success do |user|
     puts "Updated user email to #{user[:email]}"
   end
 
   m.failure :validate do |validation|
-    # You want something like validation.messages
+    puts validation
     puts 'Invalid params for user'
   end
 
