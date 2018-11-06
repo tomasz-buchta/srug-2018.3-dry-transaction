@@ -22,11 +22,12 @@ class UpdateUser
 
   private
 
+  SCHEMA = Dry::Validation.Schema do
+    required(:email).filled(:str?)
+  end
+
   def validate(input)
-    schema = Dry::Validation.Schema do
-      required(:email).filled(:str?)
-    end
-    schema.call(input).to_monad
+    SCHEMA.call(input).to_monad
   end
 
   def save(input)
