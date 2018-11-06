@@ -246,11 +246,37 @@ end
             </pre>
           </section>
           <section>
+            <h1>Usage</h1>
+            <pre>
+            <code class="ruby">
+create_user = UpdateUser.new
+create_user.call(email: 'test@email.com') do |m|
+  m.success do |user|
+    puts "Updated user email to #{user[:email]}"
+  end
+
+  # You can match exact steps, only the first match is executed
+  m.failure :validate do |validation|
+    puts validation
+    puts 'Invalid params for user'
+  end
+
+  m.failure do |error|
+    puts "Sorry but #{error} stopped us"
+  end
+end
+            </code>
+            </pre>
+          </section>
+          <section>
+            Full example available
+            </br>
+            <a href="https://github.com/tomasz-buchta/srug-2018.3-dry-transaction/blob/master/code_samples/use-case-dry-transaction.rb">https://github.com/tomasz-buchta/srug-2018.3-dry-transaction/blob/master/code_samples/use-case-dry-transaction.rb</a>
           </section>
           <section>
             And lets move the steps implementation out, this will make them easier to test and reuse
             <pre>
-            <code>
+            <code class="ruby">
 class UpdateUser
   include Dry::Transaction(container: ::Container)
 
@@ -261,6 +287,19 @@ end
             </code>
             </pre>
             You can use dry-container for this(optional)
+          </section>
+          <section>
+            <pre>
+            <code class="ruby">
+def validate(input)
+  schema = Dry::Validation.Schema do
+    required(:email).filled(:str?)
+  end
+  schema.call(input).to_monad
+end
+            </code>
+            </pre>
+            (optional) You can also use dry-validation, theres monads extension to make it seamless
           </section>
         </section>
         <section>
