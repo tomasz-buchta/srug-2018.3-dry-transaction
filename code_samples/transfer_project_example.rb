@@ -16,6 +16,7 @@ Dry::Validation.load_extensions(:monads)
 class TransferProject
   include Dry::Transaction
 
+  around :transaction
   step  :fetch_project # Returns Success(output) or Failure(:project_not_found)
   step  :fetch_user
   check :owner_can_release_ownership? # Returns true/false
@@ -50,6 +51,16 @@ class TransferProject
   def notify_user(input)
     puts "Notified user #{input[:user][:name]}"
     Success(input)
+  end
+
+  def transaction(input, &block)
+    puts '#### Transaction START ####'
+    result = block.(Success(input))
+    puts '#### Transaction END'
+    result
+    # transaction do
+  rescue StandardError
+    Failure(:db_error)
   end
 end
 
