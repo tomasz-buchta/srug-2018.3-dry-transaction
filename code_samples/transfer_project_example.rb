@@ -22,6 +22,35 @@ class TransferProject
   check :user_can_own_project? # Returns true/false
   step :transfer_project_ownership # Returns Success(input) or Failure(:project_transfer_error)
   step :notify_user # Returns Success(input) or Failure(:cannot_notify_user)
+
+  def fetch_project(input)
+    input[:project] = { name: 'Fancy project', owner: { name: 'John Smith' } }
+    Success(input)
+  end
+
+  def fetch_user(input)
+    input[:user] = { name: 'Joe Doe' }
+    Success(input)
+  end
+
+  def owner_can_release_ownership?(input)
+    true if input[:project][:owner]
+  end
+
+  def user_can_own_project?(_input)
+    true
+  end
+
+  def transfer_project_ownership(input)
+    puts "Transfered the project to #{input[:user][:name]}"
+    input[:project][:owner] = input[:user]
+    Success(input)
+  end
+
+  def notify_user(input)
+    puts "Notified user #{input[:user][:name]}"
+    Success(input)
+  end
 end
 
 transfer_project = TransferProject.new
