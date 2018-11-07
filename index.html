@@ -380,6 +380,32 @@ end
           </section>
           <section>
             You can wrap the dry-transaction in db transaction using around step
+            <pre>
+            <code class="ruby">
+def transaction(input, &block)
+  puts '#### Transaction START ####'
+  result = block.(Success(input))
+  puts '#### Transaction END ####'
+  result
+  # transaction do
+rescue StandardError
+  Failure(:db_error)
+end
+
+            </code>
+            </pre>
+          </section>
+          <section>
+            Output:
+            <pre>
+            <code class="plaintext">
+#### Transaction START ####
+Transfered the project to Joe Doe
+Notified user Joe Doe
+#### Transaction END
+transfered the project
+            </code>
+            </pre>
           </section>
 
         </section>
