@@ -13,6 +13,9 @@ require 'dry-validation'
 
 Dry::Validation.load_extensions(:monads)
 
+class TransactionError < Exception
+end
+
 class TransferProject
   include Dry::Transaction
 
@@ -56,10 +59,11 @@ class TransferProject
   def transaction(input, &block)
     puts '#### Transaction START ####'
     result = block.(Success(input))
+    raise TransactionError if result.failure?
     puts '#### Transaction END'
     result
-    # transaction do
-  rescue StandardError
+  rescue TransactionError
+    puts 'rollback yo'
     Failure(:db_error)
   end
 end
