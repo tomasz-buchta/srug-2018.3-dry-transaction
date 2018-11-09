@@ -382,13 +382,17 @@ end
             You can wrap the dry-transaction in db transaction using around step
             <pre>
             <code class="ruby">
+include Dry::Transaction
+
+around :transaction
+#...
 def transaction(input, &block)
   puts '#### Transaction START ####'
   result = block.(Success(input))
   puts '#### Transaction END ####'
   result
   # transaction do
-rescue StandardError
+rescue TransactionError
   Failure(:db_error)
 end
 
