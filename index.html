@@ -293,6 +293,31 @@ end
             You can use dry-container for this(optional)
           </section>
           <section>
+            You can wrap operations
+            <pre class="wrap-operations__code-sample">
+            <code class="ruby">
+class UpdateUser
+  include Dry::Transaction(container: ::Container)
+
+  step :validate,               with: "validate_user_params"
+  step :save,                   with: "save_user"
+  step :send_user_update_email, with: "send_user_update_email"
+
+  private
+
+  def validate(input)
+    adjusted_input = upcase_values(input)
+  end
+
+  def upcase_values(input)
+    #...
+  end
+end
+            </code>
+            </pre>
+            You can use dry-container for this(optional)
+          </section>
+          <section>
             <pre>
             <code class="ruby">
 def validate(input)
@@ -304,6 +329,14 @@ end
             </code>
             </pre>
             (optional) You can also use dry-validation, theres monads extension to make it seamless
+          </section>
+          <section>
+            <h1>Step notifications</h1>
+            You can use dry-events to subscribe to individual steps
+            <pre>
+            <code>
+            </code>
+            </pre>
           </section>
         </section>
         <section>
