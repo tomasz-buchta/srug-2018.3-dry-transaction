@@ -293,6 +293,31 @@ end
             You can use dry-container for this(optional)
           </section>
           <section>
+            You can wrap operations
+            <pre class="wrap-operations__code-sample">
+            <code class="ruby">
+class UpdateUser
+  include Dry::Transaction(container: ::Container)
+
+  step :validate,               with: "validate_user_params"
+  step :save,                   with: "save_user"
+  step :send_user_update_email, with: "send_user_update_email"
+
+  private
+
+  def validate(input)
+    adjusted_input = upcase_values(input)
+  end
+
+  def upcase_values(input)
+    #...
+  end
+end
+            </code>
+            </pre>
+            You can use dry-container for this(optional)
+          </section>
+          <section>
             <pre>
             <code class="ruby">
 def validate(input)
@@ -305,6 +330,29 @@ end
             </pre>
             (optional) You can also use dry-validation, theres monads extension to make it seamless
           </section>
+          <section>
+            <h1>Step notifications</h1>
+            You can use dry-events to subscribe to individual steps
+            <pre>
+            <code class="ruby long-snippet">
+NOTIFICATIONS = []
+module UserCreationListener
+  extend self
+
+  def on_step(event)
+    NOTIFICATIONS << "Started creation of #{user[:email]}"
+  end
+end
+
+create_user = CreateUser.new
+create_user.subscribe(create: UserCreationListener)
+create_user.call(name: "joe", email: "joe@doe.com")
+
+NOTIFICATIONS 
+# => ["Started creation of joe@doe.com"]
+            </code>
+            </pre>
+          </section>
         </section>
         <section>
           <h1>Not only step</h1>
@@ -313,42 +361,6 @@ end
           <section><h2>try</h2> the operation may raise an exception in an error case. This is caught and returned as Failure(exception). The output is otherwise returned as Success(output).</section>
           <section><h2>tee</h2> the operation interacts with some external system and has no meaningful output. The original input is passed through and returned as Success(input).</section>
           <section>Custom adapters - build one yourself</section>
-        </section>
-        <section>
-          <section>
-            <h2>Real world example</h2>
-            <pre>
-              <code class="ruby">
-class BuildContext
-  include Dry::Transaction(container: ::Container)
-
-  check :validate_guest_count, with: 'trip.validate_guest_count'
-  map  :calculate_host_pricing, with: 'trip.calculate_host_pricing'
-  step :build_booking_intent,   with: 'trip.build_booking_intent'
-  map  :build_payment_options,  with: 'trip.build_payment_options'
-  map  :build_nationality_meta, with: 'trip.build_nationality_meta'
-end
-              </code>
-            </pre>
-
-          </section>
-          <section>
-            <pre>
-          <code class="ruby">
-  check :validate_guest_count, with: 'trip.validate_guest_count'
-          </code>
-            </pre>
-            <!-- TODO: Format this nicely -->
-            The step will pass if it returns true. So the operation will continue if the guest count is valid
-          </section>
-          <section>
-            <pre>
-            <code class="ruby">
-  step :build_booking_intent,   with: 'trip.build_booking_intent'
-            </code>
-            </pre>
-            Will apply the transaction specified and return it outputs
-          </section>
         </section>
         <section>
           <h1>More sophisticated example</h1>
